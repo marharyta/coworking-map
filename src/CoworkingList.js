@@ -1,21 +1,20 @@
 import React from "react";
-// import axios from "axios";
+import Section from "./Section";
+const coworkings = require("./coworking.json");
+
+let markers = [];
+
+markers = coworkings.map(item => {
+  return <Section key={item.id} text={item.title} images={item.images}/>;
+});
 
 class CoworkingList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      posts: []
-    };
-  }
-  componentDidMount() {
-    fetch("coworking.json").then(resp => {
-      console.log(resp.blob());
-    });
-  }
   render() {
-    return <h1>Hello</h1>;
+    return ( 
+      <div>
+        { markers.map(item => item) }
+      </div>
+    )
   }
 }
 

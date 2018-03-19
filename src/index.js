@@ -1,16 +1,19 @@
 import React from "react";
 import { render } from "react-dom";
-import Hello from "./Hello";
 import { CoworkingMap } from "./Maps";
 import CoworkingList from "./CoworkingList";
+import Slider from "./Slider";
+import styled from "styled-components";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+const Wrapper = styled.div`
+  background: pink;
+  font-family: sans-serif;
+  text-align: center;
+`;
+
 
 const App = () => (
-  <div style={styles}>
+  <Wrapper>
     <CoworkingList />
     <CoworkingMap
       isMarkerShown
@@ -24,8 +27,10 @@ const App = () => (
       mapElement={
         <div style={{ height: `100%` }} />
       }
-    />
-  </div>
+    /> 
+  </Wrapper>
 );
 
 render(<App />, document.getElementById("root"));
+
+   

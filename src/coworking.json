@@ -33,6 +33,13 @@
         "lat": "60.190711",
         "lon": "24.907195"
       }
+    ],
+    "images": [
+      "../assets/helsinki_think_co.jpg", 
+      "../assets/helsinki_think_co1.jpg", 
+      "../assets/helsinki_think_co2.jpg",
+      "../assets/helsinki_think_co3.jpg",
+      "../assets/helsinki_think_co4.jpg"
     ]
   },
   {
@@ -50,6 +57,13 @@
         "lat": "60.165238",
         "lon": "24.946249"
       }
+    ],
+    "images": [
+      "../assets/msflux.jpg", 
+      "../assets/msflux1.jpg", 
+      "../assets/msflux2.jpg",
+      "../assets/msflux3.jpg",
+      "../assets/msflux4.jpg"
     ]
   }
 ]
