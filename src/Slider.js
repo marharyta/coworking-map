@@ -12,9 +12,8 @@ export default class SimpleSlider extends Component {
     };
     return (
       <div>
-        <h2> Single Item</h2>
         <Slider {...settings}>
-          { this.props.children }
+          {this.props.children}
         </Slider>
       </div>
     );

@@ -1,21 +1,35 @@
 import React from "react";
-import Section from "./Section";
-const coworkings = require("./coworking.json");
+import { connect } from "react-redux";
+import { Route, Link } from "react-router-dom";
+import Section from './Section';
 
-let markers = [];
+const mapStateToProps = (state, match) => {
+  return { locations: state.locations, match: match };
+};
 
-markers = coworkings.map(item => {
-  return <Section key={item.id} text={item.title} images={item.images}/>;
-});
-
-class CoworkingList extends React.Component {
+class ConnectedList extends React.Component {
   render() {
-    return ( 
+    return (
       <div>
-        { markers.map(item => item) }
+        {
+          this.props.locations.items.map(item => {
+            if (item.address.length !== 0) {
+              return item.address.map(i => <Link to={"/coworkings/" + item.title} key={item.id + Math.random()}> {i.street} </Link >);
+            }
+          })
+        }
+        {this.props.locations.items.map(i => (
+          <Route
+            key={i.id}
+            path={`${this.props.match.match.url}/${i.title}`}
+            render={props => <p> Hello {i.title} <Section images={i.images} /> </p>}
+          />
+        ))}
       </div>
     )
   }
 }
+
+const CoworkingList = connect(mapStateToProps)(ConnectedList);
 
 export default CoworkingList;
