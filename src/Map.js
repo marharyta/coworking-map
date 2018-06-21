@@ -8,7 +8,7 @@ import { Marker } from "./Marker";
 import { GetUserLocation } from './GetUserLocation';
 
 const mapStateToProps = state => {
-  return { locations: state.locations, userLocation: state.userLocation };
+  return { locations: state.locations, userLocation: state.userLocation, searchLocation: state.searchLocation };
 };
 
 class SimpleMap extends React.Component {
@@ -35,7 +35,13 @@ class SimpleMap extends React.Component {
           defaultZoom={coords.zoom}
           center={this.props.userLocation.location.coordinates.lat ? this.props.userLocation.location.coordinates : coords.center}
         >
-          {
+          {this.props.searchLocation.searchActive ?
+            this.props.searchLocation.results.map(item => {
+              if (item.address.length !== 0) {
+                return item.address.map(i => <Marker location={item} address={i} lat={i.lat} lng={i.lng} isUser={false} />);
+              }
+            })
+            :
             this.props.locations.items.map(item => {
               if (item.address.length !== 0) {
                 return item.address.map(i => <Marker location={item} address={i} lat={i.lat} lng={i.lng} isUser={false} />);

@@ -16,6 +16,8 @@ export const FAIL_USER_LOCATIONS = "FAIL_USER_LOCATIONS";
 
 export const CONVERT_COORDINATES_TO_LOCATION = "CONVERT_COORDINATES_TO_LOCATION";
 
+export const SEARCH_LOCATION = "SEARCH_LOCATION";
+
 function requestLocations(country) {
     return {
         type: REQUEST_LOCATIONS,
@@ -195,10 +197,26 @@ export function fetchUserLocations(country) {
     };
 }
 
-// 
 function convertCoordinatesToLocation(coordiates) {
     return {
         type: CONVERT_COORDINATES_TO_LOCATION,
         payload: data
+    }
+}
+
+function getSearchLocationResults(parameter, data) {
+    return {
+        type: SEARCH_LOCATION,
+        payload: {
+            searchActive: true,
+            parameter: parameter,
+            results: data
+        }
+    }
+}
+
+export function getSearchResults(parameter, data) {
+    return function (dispatch) {
+        dispatch(getSearchLocationResults(parameter, data));
     }
 }

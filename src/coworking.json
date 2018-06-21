@@ -2,35 +2,47 @@
   {
     "id": 123,
     "title": "Think Company",
-    "website": "www.google.com",
+    "website": "http://thinkcompany.fi/spaces/",
     "image": "http://thinkcompany.fi/wp-content/uploads/2014/05/hkithinkco04-1024x702.jpg",
     "address": [
       {
         "id": 1234,
+        "name": "Center Think Company",
         "country": "Finland",
         "city": "Helsinki",
         "street": "Yliopistonkatu 4",
         "postcode": "00101",
         "lat": "60.169787",
-        "lng": "24.948776"
+        "lng": "24.948776",
+        "website": " ",
+        "schedule": {
+          "weekdays": true,
+          "weekends": false,
+          "hours": "10-22"
+        }
       },
       {
         "id": 1235,
+        "name": "Viikki Think Company",
         "country": "Finland",
         "city": "Helsinki",
         "street": "Ladugårdsbågen 3",
         "postcode": "00790",
         "lat": "60.228029",
-        "lng": "25.015569"
+        "lng": "25.015569",
+        "website": " ",
+        "schedule": {}
       },
       {
         "id": 1236,
+        "name": "Terkko Health Hub",
         "country": "Finland",
         "city": "Helsinki",
         "street": "Haartmansgatan 4",
         "postcode": "00290",
         "lat": "60.190711",
-        "lng": "24.907195"
+        "lng": "24.907195",
+        "website": "http://terkko.fi/"
       }
     ],
     "images": [
@@ -49,6 +61,30 @@
     "address": [
       {
         "id": 1237,
+        "country": "Finland",
+        "city": "Helsinki",
+        "street": "Högbergsgatan 35",
+        "postcode": "00101",
+        "lat": "60.165238",
+        "lng": "24.946249"
+      }
+    ],
+    "images": [
+      "../assets/msflux.jpg",
+      "../assets/msflux1.jpg",
+      "../assets/msflux2.jpg",
+      "../assets/msflux3.jpg",
+      "../assets/msflux4.jpg"
+    ]
+  },
+  {
+    "id": 155,
+    "title": "MS Flux",
+    "website": "www.google.com",
+    "image": " ",
+    "address": [
+      {
+        "id": 1287,
         "country": "Finland",
         "city": "Helsinki",
         "street": "Högbergsgatan 35",

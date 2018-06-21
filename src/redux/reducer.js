@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { REQUEST_LOCATIONS, RECEIVE_LOCATIONS, FAIL_LOCATIONS, SELECT_LOCATION_ON_MAP, GET_CENTER_COORDINATES, REQUEST_USER_LOCATIONS, RECEIVE_USER_LOCATIONS, FAIL_USER_LOCATIONS } from './actions';
-
+import { SEARCH_LOCATION, REQUEST_LOCATIONS, RECEIVE_LOCATIONS, FAIL_LOCATIONS, SELECT_LOCATION_ON_MAP, GET_CENTER_COORDINATES, REQUEST_USER_LOCATIONS, RECEIVE_USER_LOCATIONS, FAIL_USER_LOCATIONS } from './actions';
+import * as JsSearch from 'js-search';
 const initialLocations = {
     isFetching: false,
     items: [],
@@ -25,6 +25,12 @@ const initialUserLocation = {
         }
     },
     lastUpdated: 0
+};
+
+const initialSearchResults = {
+    searchActive: false,
+    parameter: '',
+    results: []
 };
 
 export const locations = (
@@ -112,8 +118,36 @@ export const userLocation = (
     }
 };
 
+export const searchLocation = (
+    state = initialSearchResults,
+    action
+) => {
+    switch (action.type) {
+        case SEARCH_LOCATION:
+            console.log(
+                "SEARCH_LOCATION",
+                action
+            );
+            // todo: perform search
+            const search = new JsSearch.Search('id');
+            search.addIndex('title');
+            search.addDocuments(action.payload.results);
+            const searchResults = search.search(action.payload.parameter);
+            const isActive = searchResults.length > 0 ? true : false;
+            return {
+                searchActive: isActive,
+                parameter: action.payload.parameter,
+                results: [...searchResults]
+            };
+
+        default:
+            return state;
+    }
+};
+
 export const combinedReducer = combineReducers({
     locations: locations,
     userLocation: userLocation,
-    centerLocation: centerLocation
+    centerLocation: centerLocation,
+    searchLocation: searchLocation
 });
