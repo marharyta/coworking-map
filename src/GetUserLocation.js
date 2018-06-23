@@ -9,7 +9,6 @@ export class GetUserLocation extends React.Component {
         document.getElementById('loc').addEventListener("click", function () {
             store.dispatch(fetchUserLocations("SE"));
         });
-
     }
     render() {
         return <button id="loc">get location</button>;

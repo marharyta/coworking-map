@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import { SEARCH_LOCATION, REQUEST_LOCATIONS, RECEIVE_LOCATIONS, FAIL_LOCATIONS, SELECT_LOCATION_ON_MAP, GET_CENTER_COORDINATES, REQUEST_USER_LOCATIONS, RECEIVE_USER_LOCATIONS, FAIL_USER_LOCATIONS } from './actions';
 import * as JsSearch from 'js-search';
+import matchSorter from 'match-sorter';
+
 const initialLocations = {
     isFetching: false,
     items: [],
@@ -133,6 +135,16 @@ export const searchLocation = (
             search.addIndex('title');
             search.addDocuments(action.payload.results);
             const searchResults = search.search(action.payload.parameter);
+            // match sorter 
+            const searchResults2 = matchSorter(action.payload.results, action.payload.parameter, { keys: ['title'] });
+            console.log(
+                "searchResults",
+                searchResults
+            );
+            console.log(
+                "searchResults2",
+                searchResults2
+            );
             const isActive = searchResults.length > 0 ? true : false;
             return {
                 searchActive: isActive,
