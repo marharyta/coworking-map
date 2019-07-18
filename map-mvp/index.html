@@ -1,0 +1,229 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>My Project</title>
+    <meta name="description" content="My Project">
+    <meta name="author" content="Margarita Obraztsova">
+
+    <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin />
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin></script>
+    <style>
+        #mapid {
+            height: 180px;
+            width: 200px;
+        }
+    </style> -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        #buttons {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .button {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            width: 20%;
+            padding: 8px;
+            border-radius: 3px;
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+            background: #ee8a65;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.css'
+        type='text/css' />
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
+
+    <!-- <script src='./mapbox-gl-accessibility/index.js'></script> -->
+    <!-- <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.css'
+        type='text/css' /> -->
+
+    <!-- MapboxAccessibility -->
+    <div id='map' style='width: 600px; height: 600px;'></div>
+    <div id="mapid"></div>
+    <ul id="buttons">
+        <li id='button-fr' class='button'>French</li>
+        <li id='button-ru' class='button'>Russian</li>
+        <li id='button-de' class='button'>German</li>
+        <li id='button-es' class='button'>Spanish</li>
+    </ul>
+    <!-- <script src="js/scripts.js"></script> -->
+    <script>
+
+        // geo coordinates first and zoom level then
+        // var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+        // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        //     maxZoom: 18,
+        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        //         '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        //         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        //     id: 'mapbox.streets'
+        // }).addTo(mymap);
+
+    </script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmlpdHRhZ2lybCIsImEiOiJjamZkdzZ4MXYycnlkMnJudmxwb2x3Yzh0In0.5jCRD5YcqflEAuZqTUct9g';
+        if (!mapboxgl.supported()) {
+            alert('Your browser does not support Mapbox GL');
+        } else {
+            alert('Your browser supports Mapbox GL');
+            var map = new mapboxgl.Map({
+                container: 'map',
+                center: [24.9339, 60.1666],
+                hash: true,
+                zoom: 11.6,
+                style: 'mapbox://styles/mapbox/streets-v11'
+                // style: 'mapbox://styles/mapbox/satellite-v9'
+            });
+
+            var marker = new mapboxgl.Marker({
+                options: {
+                    anchor: 'bottom'
+                }
+            })
+                .setLngLat([24.95375, 60.18310])
+                .addTo(map);
+
+            map.addControl(new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }));
+
+
+
+            map.addControl(new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            }), 'top-left');
+
+            var language = new MapboxLanguage();
+            map.addControl(language);
+
+            document.getElementById('buttons').addEventListener('click', function (event) {
+                console.log('here')
+                var language = event.target.id.substr('button-'.length);
+                // Use setLayoutProperty to set the value of a layout property in a style layer.
+                // The three arguments are the id of the layer, the name of the layout property,
+                // and the new property value.
+                map.setLayoutProperty('country-label', 'text-field', ['get', 'name_' + language]);
+                //  
+            });
+
+            map.on('load', function () {
+                var url = 'https://localhost:8000/dataset.geojson';
+
+                map.addSource('source_id', { type: 'geojson', data: url });
+
+                // map.addLayer({
+                //     "id": "park-boundary",
+                //     "type": "fill",
+                //     "source": "source_id",
+                //     // "paint": {
+                //     //     "circle-radius": 6,
+                //     //     "circle-color": "#B42222"
+                //     // },
+                // })
+
+                // console.log('whats in a map', map.getSource('source_id').getData())
+
+                map.addLayer({
+                    "id": "testLayer",
+                    // "type": "symbol",
+                    "source": "source_id",
+                    "type": "symbol",
+                    // "paint": {
+                    //     "fill-color": "#00ffff"
+                    // }
+                    // {
+                    //     "type": "geojson",
+                    //     "data": {
+                    //         "type": "FeatureCollection",
+                    //         "features": [{
+                    //             "type": "Feature",
+                    //             "geometry": {
+                    //                 "type": "Point",
+                    //                 "coordinates": [-77.03238901390978, 38.913188059745586]
+                    //             },
+                    //             "properties": {
+                    //                 "title": "Mapbox DC",
+                    //                 "icon": "monument"
+                    //             }
+                    //         }, {
+                    //             "type": "Feature",
+                    //             "geometry": {
+                    //                 "type": "Point",
+                    //                 "coordinates": [-122.414, 37.776]
+                    //             },
+                    //             "properties": {
+                    //                 "title": "Mapbox SF",
+                    //                 "icon": "harbor"
+                    //             }
+                    //         }]
+                    //     }
+                    // },
+                    // "layout": {
+
+                    //     "text-field": "Test",
+                    //     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                    //     "text-offset": [0, 0.6],
+                    //     "text-anchor": "top"
+                    // }
+                });
+
+            });
+            // map.on('load', () => {
+            // map.addControl(new MapboxAccessibility({
+
+            //     // A string value representing a property key in the data. This 
+            //     // will be used as the text in voiceover.
+            //     accessibleLabelProperty: 'name',
+
+            //     // The layers within the style that
+            //     // 1. Contain the `accessibleLabelProperty` value as a key
+            //     // 2. Should be used for voiceover.
+            //     layers: [
+            //         'poi-scalerank4-l15',
+            //         'poi-scalerank4-l1',
+            //         'poi-scalerank3',
+            //         'poi-scalerank2',
+            //         'poi-scalerank1',
+            //         'poi-parks_scalerank4',
+            //         'rail-label'
+            //     ]
+            // }));
+            // });
+
+        }
+    </script>
+
+</body>
+
+</html>
