@@ -15,7 +15,7 @@
     "start": "NODE_ENV=development webpack-dev-server  --mode=development --hot"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "0.21.1",
     "babel-loader": "^7.1.4",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^1.1.11",
